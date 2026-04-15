@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Agenda Estudiantil</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- PANTALLA LOGIN -->
+<div id="pantallaLogin">
+
+<h2>Registro / Login</h2>
+
+<input type="email" id="correo" placeholder="Ingresa tu Gmail">
+<button onclick="login()">Ingresar</button>
+
+</div>
+
+
+<!-- PANTALLA AGENDA -->
+<div id="pantallaAgenda" style="display:none;">
+
+<h1>Agenda de Recuperatorios</h1>
+
+<p id="usuario"></p>
+
+<button onclick="logout()">Cerrar sesión</button>
+
+<button onclick="borrarDatos()">Resetear todo</button>
+
+<!-- resto de tu código -->
+
+<h1>Agenda de Recuperatorios</h1>
+
+<p id="usuario"></p>
+
+<input type="text" id="tarea" placeholder="Trabajo a recuperar">
+
+<select id="materia">
+<option>Matemática</option>
+<option>Historia</option>
+<option>Programación</option>
+<option>Inglés</option>
+</select>
+
+<input type="number" id="nota" placeholder="Nota">
+
+<input type="date" id="fecha">
+
+<button onclick="agregarTarea()">Agregar</button>
+
+<ul id="lista"></ul>
+
+<button onclick="calcularPromedio()">Calcular Promedio</button>
+
+<p id="promedio"></p>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
