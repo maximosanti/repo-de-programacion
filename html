@@ -1,69 +1,182 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Agenda Estudiantil</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Estudiantil - ProA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="container">
+    <div class="container">
 
-<!-- PANTALLA LOGIN -->
-<div id="pantallaLogin">
+        <!-- PANTALLA LOGIN -->
+        <div id="pantallaLogin" class="card">
+            <h2>Registro / Login</h2>
+            <p class="subtitulo">Ingresa tus datos institucionales</p>
+            
+            <input type="text" id="nombreUsuario" placeholder="Nombre y Apellido" required>
+            <input type="email" id="correo" placeholder="usuario@escuelasproa.edu.ar" required>
+            
+            <button onclick="login()">Ingresar</button>
+        </div>
 
-<h2>Registro / Login</h2>
+        <!-- PANTALLA AGENDA -->
+        <div id="pantallaAgenda" class="card" style="display:none;">
+            <div class="header-agenda">
+                <h1>Agenda Estudiantil - Proa</h1>
+                <p id="usuario" class="subtitulo"></p>
+                <div class="header-botones">
+                    <button class="btn-secundario" onclick="logout()">Cerrar sesión</button>
+                    <button class="btn-danger" onclick="borrarDatos()">Resetear todo</button>
+                    <button type="button" id="botonTema" class="btn-tema" onclick="toggleTema()" title="Cambiar tema" aria-label="Cambiar entre tema claro y oscuro">🌙</button>
+                </div>
+            </div>
 
-<input type="email" id="correo" placeholder="Ingresa tu Gmail">
-<button onclick="login()">Ingresar</button>
+            <div id="panelBienvenida" class="panel-bienvenida"></div>
 
-</div>
+            <!-- FORMULARIO AGREGAR TAREA -->
+            <div class="form-container">
+                <h3>Cargar Nueva Evaluacion</h3>
+                
+                <select id="materia" required>
+                    <option value="">-- Seleccionar Materia --</option>
+                    <option>Matemática</option>
+                    <option>Historia</option>
+                    <option>Programación</option>
+                    <option>Inglés</option>
+                    <option>Lengua</option>
+                    <option>Ciudadanía y política</option>
+                    <option>Taller de inglés</option>
+                    <option>Desarrollo de aplicaciones móviles</option>
+                    <option>Filosofía</option>
+                    <option>Club de Ciencias</option>
+                    <option>Club de arte</option>
+                    <option>Educación Artística</option>
+                </select>
 
+                <select id="tipo" required onchange="actualizarVisibilidadNota()">
+                    <option value="">-- Tipo --</option>
+                    <option value="Tarea">Tarea / Examen</option>
+                    <option value="Recuperatorio">Recuperatorio</option>
+                </select>
 
-<!-- PANTALLA AGENDA -->
-<div id="pantallaAgenda" style="display:none;">
+                <input type="text" id="tarea" placeholder="Nombre de la tarea / examen" required onkeydown="if(event.key==='Enter'){event.preventDefault(); agregarTarea();}">
 
-<h1>Agenda de Recuperatorios</h1>
+                <div class="row">
+                    <div class="input-stepper" id="notaWrapper" style="display:none;">
+                        <input type="number" id="nota" min="1" max="10" placeholder="Nota">
+                        <div class="stepper-botones">
+                            <button type="button" class="stepper-btn" onclick="cambiarNota(1)" aria-label="Aumentar nota">▲</button>
+                            <button type="button" class="stepper-btn" onclick="cambiarNota(-1)" aria-label="Disminuir nota">▼</button>
+                        </div>
+                    </div>
 
-<p id="usuario"></p>
+                    <div class="input-fecha-wrapper">
+                        <input type="date" id="fecha" required>
+                        <button type="button" class="btn-calendario" onclick="toggleCalendarioGrande()" title="Ver calendario" aria-label="Abrir calendario grande">📅</button>
+                    </div>
+                </div>
 
-<button onclick="logout()">Cerrar sesión</button>
+                <!-- CALENDARIO GRANDE -->
+                <div id="calendarioGrande" class="calendario-grande" style="display:none;">
+                    <div class="calendario-header">
+                        <button type="button" onclick="cambiarMes(-1)" aria-label="Mes anterior">‹</button>
+                        <span id="mesAnioLabel"></span>
+                        <button type="button" onclick="cambiarMes(1)" aria-label="Mes siguiente">›</button>
+                    </div>
+                    <div class="dias-semana">
+                        <span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span>
+                    </div>
+                    <div id="diasCalendario" class="dias-calendario"></div>
+                    <div class="calendario-leyenda">
+                        <span><i class="punto tarea"></i> Tarea</span>
+                        <span><i class="punto recuperatorio"></i> Recuperatorio</span>
+                    </div>
+                </div>
 
-<button onclick="borrarDatos()">Resetear todo</button>
+                <button onclick="agregarTarea()" id="botonAgregar">Agregar Evaluacion / tarea</button>
+                <button type="button" id="botonCancelarEdicion" class="btn-secundario" onclick="cancelarEdicion()" style="display:none;">Cancelar edición</button>
+            </div>
 
-<!-- resto de tu código -->
+            <!-- LISTADO Y RESUMEN -->
+            <div class="listado-container">
+                <h3>Listado de Evaluaciones</h3>
 
-<h1>Agenda de Recuperatorios</h1>
+                <div id="resumenStats" class="resumen-stats"></div>
 
-<p id="usuario"></p>
+                <div id="hoyManana" class="hoy-manana"></div>
 
-<input type="text" id="tarea" placeholder="Trabajo a recuperar">
+                <div class="controles-listado">
+                    <div class="filtro-container">
+                        <label for="filtroMateria">Filtrar por materia:</label>
+                        <select id="filtroMateria" onchange="renderizarListas()">
+                            <option value="">Todas las materias</option>
+                            <option>Matemática</option>
+                            <option>Historia</option>
+                            <option>Programación</option>
+                            <option>Inglés</option>
+                            <option>Lengua</option>
+                            <option>Ciudadanía y política</option>
+                            <option>Taller de inglés</option>
+                            <option>Desarrollo de aplicaciones móviles</option>
+                            <option>Filosofía</option>
+                            <option>Club de Ciencias</option>
+                            <option>Club de arte</option>
+                            <option>Educación Artística</option>
+                        </select>
+                    </div>
 
-<select id="materia">
-<option>Matemática</option>
-<option>Historia</option>
-<option>Programación</option>
-<option>Inglés</option>
-</select>
+                    <div class="filtro-container">
+                        <label for="buscarTexto">Buscar por nombre:</label>
+                        <input type="text" id="buscarTexto" placeholder="Ej: parcial, trabajo práctico..." oninput="renderizarListas()">
+                    </div>
+                </div>
 
-<input type="number" id="nota" placeholder="Nota">
+                <div class="seccion-tareas">
+                    <h4>📘 Tareas y Exámenes</h4>
+                    <ul id="listaTareas"></ul>
+                </div>
 
-<input type="date" id="fecha">
+                <div class="seccion-recuperatorios">
+                    <h4>📕 Recuperatorios</h4>
+                    <ul id="listaRecuperatorios"></ul>
+                </div>
 
-<button onclick="agregarTarea()">Agregar</button>
+                <div id="progresoMaterias" class="progreso-materias"></div>
 
-<ul id="lista"></ul>
+                <div class="promedio-box">
+                    <button onclick="calcularPromedio()">Calcular Promedio</button>
+                    <button onclick="exportarCSV()">Exportar a Excel (CSV)</button>
+                    <p id="promedio"></p>
+                </div>
+            </div>
+        </div>
 
-<button onclick="calcularPromedio()">Calcular Promedio</button>
+    </div>
 
-<p id="promedio"></p>
+    <!-- ASISTENTE DE LA TESINA -->
+    <button id="botonAsistente" class="boton-asistente" onclick="toggleAsistente()" title="Asistente" aria-label="Abrir asistente">💬</button>
 
-</div>
+    <div id="panelAsistente" class="panel-asistente" style="display:none;">
+        <div class="asistente-header">
+            <span>🤖 Asistente Agenda ProA</span>
+            <button type="button" class="cerrar-asistente" onclick="toggleAsistente()" aria-label="Cerrar asistente">✕</button>
+        </div>
 
-</div>
+        <div id="mensajesAsistente" class="asistente-mensajes"></div>
 
-<script src="script.js"></script>
+        <div class="asistente-input-row">
+            <input type="text" id="inputAsistente" placeholder="Escribí tu pregunta..." onkeydown="if(event.key==='Enter') enviarPreguntaAsistente()">
+            <button type="button" onclick="enviarPreguntaAsistente()" aria-label="Enviar pregunta">➤</button>
+        </div>
+    </div>
 
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
 </body>
 </html>
