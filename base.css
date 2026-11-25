@@ -1,559 +1,493 @@
-<!DOCTYPE html>
-<html lang="es" data-tema="oscuro">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduAgenda · Campus Estudiantil</title>
+/* ---------- VARIABLES DE TEMA (OSCURO PRO + CLARO LUMINOUS) ---------- */
+:root,
+html[data-tema="oscuro"] {
+    --color-primario: #8b5cf6;
+    --color-primario-hover: #7c3aed;
+    --color-acento: #a78bfa;
+    --color-marca: #c084fc;
+    --color-peligro: #ef4444;
+    --color-peligro-hover: #dc2626;
+    --color-alerta: #f59e0b;
+    --color-exito: #10b981;
+    --color-exito-hover: #059669;
+    --color-aprobado: #4ade80;
+    --color-desaprobado: #f87171;
+    --color-entregada: #c084fc;
+    --color-error-texto: #fca5a5;
 
-    <script>
-        (function() {
-            var t = localStorage.getItem("temaEduAgenda");
-            if (t === "claro" || t === "oscuro") {
-                document.documentElement.setAttribute("data-tema", t);
-            }
-        })();
-    </script>
+    --fondo-body: #090814;
+    --fondo-sidebar: #0e0c1f;
+    --fondo-topbar: rgba(14, 12, 31, 0.85);
+    --fondo-tarjeta: #131129;
+    --fondo-subtarjeta: rgba(255, 255, 255, 0.035);
+    --fondo-panel: #110f24;
+    --fondo-item-interno: rgba(255, 255, 255, 0.045);
+    --fondo-input: #0b0a1a;
+    --fondo-opcion: #161331;
+    --fondo-btn-secundario: rgba(255, 255, 255, 0.08);
+    --fondo-btn-secundario-hover: rgba(255, 255, 255, 0.14);
+    --fondo-chip: rgba(139, 92, 246, 0.16);
+    --fondo-simulador: rgba(139, 92, 246, 0.12);
+    --fondo-calendario-popup: #161331;
+    --fondo-celda-dia: rgba(255, 255, 255, 0.05);
+    --fondo-modal: #161331;
+    --fondo-toast: rgba(22, 19, 49, 0.98);
 
-    <!-- Fuentes -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    --borde-suave: rgba(167, 139, 250, 0.16);
+    --borde-fuerte: rgba(167, 139, 250, 0.32);
+    --borde-input: rgba(167, 139, 250, 0.24);
+    --sombra-card: 0 10px 30px rgba(0, 0, 0, 0.35);
 
-    <!-- Estilos separados por módulo -->
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/dashboard.css">
-    <link rel="stylesheet" href="css/evaluaciones.css">
-    <link rel="stylesheet" href="css/modales-alertas.css">
-</head>
-<body>
+    --texto-titulo: #f8fafc;
+    --texto-principal: #e2e8f0;
+    --texto-secundario: #94a3b8;
+    --texto-tenue: #64748b;
+    --texto-label: #cbd5e1;
+}
 
-    <!-- SÍMBOLO SVG REUTILIZABLE DEL LOGOTIPO -->
-    <svg width="0" height="0" style="position:absolute; width:0; height:0; overflow:hidden;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-        <symbol id="logo-eduagenda" viewBox="0 0 110 110">
-            <defs>
-                <linearGradient id="coverGradLogo" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#8b5cf6"/>
-                    <stop offset="100%" stop-color="#5b21b6"/>
-                </linearGradient>
-                <linearGradient id="badgeGradLogo" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#a855f7"/>
-                    <stop offset="100%" stop-color="#7c3aed"/>
-                </linearGradient>
-            </defs>
-            <g transform="rotate(-7 52 52)">
-                <rect x="22" y="14" width="16" height="74" rx="6" fill="#3b0764"/>
-                <rect x="30" y="14" width="52" height="74" rx="10" fill="url(#coverGradLogo)"/>
-                <path d="M30 78 H80 V84 C80 86.5 78 88 75 88 H32 C29 88 27 86 27 83 C27 80 28.5 78 30 78 Z" fill="#f8fafc"/>
-                <path d="M38 82 H48 V98 L43 93 L38 98 Z" fill="#a855f7"/>
-                <rect x="14" y="25" width="16" height="7" rx="3.5" fill="#2e1065"/>
-                <rect x="14" y="46" width="16" height="7" rx="3.5" fill="#2e1065"/>
-                <rect x="14" y="67" width="16" height="7" rx="3.5" fill="#2e1065"/>
-                <rect x="42" y="29" width="27" height="5" rx="2.5" fill="#f3e8ff"/>
-                <rect x="42" y="40" width="19" height="5" rx="2.5" fill="#e9d5ff"/>
-                <rect x="42" y="51" width="24" height="5" rx="2.5" fill="#e9d5ff"/>
-            </g>
-            <circle cx="80" cy="76" r="20" fill="url(#badgeGradLogo)" stroke="#ffffff" stroke-width="3.5"/>
-            <path d="M72 76.5 L77.5 82 L89 70.5" fill="none" stroke="#ffffff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </symbol>
-    </svg>
+html[data-tema="claro"] {
+    --color-primario: #7c3aed;
+    --color-primario-hover: #6d28d9;
+    --color-acento: #8b5cf6;
+    --color-marca: #7c3aed;
+    --color-peligro: #dc2626;
+    --color-peligro-hover: #b91c1c;
+    --color-alerta: #d97706;
+    --color-exito: #059669;
+    --color-exito-hover: #047857;
+    --color-aprobado: #16a34a;
+    --color-desaprobado: #dc2626;
+    --color-entregada: #7c3aed;
+    --color-error-texto: #dc2626;
 
-    <div class="container">
+    --fondo-body: #f4f3fa;
+    --fondo-sidebar: #ffffff;
+    --fondo-topbar: rgba(255, 255, 255, 0.9);
+    --fondo-tarjeta: #ffffff;
+    --fondo-subtarjeta: #f8f7fc;
+    --fondo-panel: #ffffff;
+    --fondo-item-interno: #f5f3ff;
+    --fondo-input: #ffffff;
+    --fondo-opcion: #ffffff;
+    --fondo-btn-secundario: rgba(124, 58, 237, 0.08);
+    --fondo-btn-secundario-hover: rgba(124, 58, 237, 0.15);
+    --fondo-chip: rgba(124, 58, 237, 0.1);
+    --fondo-simulador: rgba(124, 58, 237, 0.08);
+    --fondo-calendario-popup: #ffffff;
+    --fondo-celda-dia: rgba(124, 58, 237, 0.06);
+    --fondo-modal: #ffffff;
+    --fondo-toast: rgba(255, 255, 255, 0.98);
 
-        <!-- ==================== PANTALLA LOGIN SPLIT-SCREEN ==================== -->
-        <div id="pantallaLogin" class="login-split-shell">
-            <div class="login-brand-panel">
-                <div class="login-brand-top">
-                    <div class="brand-pill">
-                        <i data-lucide="sparkles"></i>
-                        <span>Escuelas ProA · Plataforma Estudiantil</span>
-                    </div>
-                </div>
+    --borde-suave: rgba(124, 58, 237, 0.15);
+    --borde-fuerte: rgba(124, 58, 237, 0.3);
+    --borde-input: rgba(124, 58, 237, 0.25);
+    --sombra-card: 0 8px 26px rgba(91, 33, 182, 0.07);
 
-                <div class="login-brand-hero">
-                    <div class="logo-wrapper-login">
-                        <svg class="logo-cuaderno"><use href="#logo-eduagenda"></use></svg>
-                    </div>
-                    <h1>Organizá tu cursada con <span class="brand-accent">EduAgenda</span></h1>
-                    <p>Controlá tus exámenes, trabajos prácticos, recuperatorios, promedios por materia y horario semanal desde un mismo lugar.</p>
+    --texto-titulo: #1e1b4b;
+    --texto-principal: #1f2937;
+    --texto-secundario: #4b5563;
+    --texto-tenue: #6b7280;
+    --texto-label: #3730a3;
+}
 
-                    <div class="login-feature-grid">
-                        <div class="login-feature-card">
-                            <i data-lucide="calendar-check-2"></i>
-                            <div>
-                                <strong>Calendario Inteligente</strong>
-                                <span>Alertas visuales para entregas de hoy y mañana.</span>
-                            </div>
-                        </div>
-                        <div class="login-feature-card">
-                            <i data-lucide="calculator"></i>
-                            <div>
-                                <strong>Simulador de Notas</strong>
-                                <span>Calculá qué nota necesitás para aprobar o promocionar.</span>
-                            </div>
-                        </div>
-                        <div class="login-feature-card">
-                            <i data-lucide="clock"></i>
-                            <div>
-                                <strong>Horario Semanal</strong>
-                                <span>Sincronizado con tus evaluaciones pendientes del día.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-                <div class="login-brand-footer">
-                    <span>Proyecto de 6.° Año · Desarrollo de Aplicaciones</span>
-                </div>
-            </div>
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
 
-            <div class="login-form-panel">
-                <div class="login-topbar">
-                    <button type="button" id="btnTemaLogin" class="btn-tema" title="Cambiar entre modo oscuro y claro">
-                        <i data-lucide="sun"></i>
-                        <span>Modo Claro</span>
-                    </button>
-                </div>
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14.5px;
+    line-height: 1.45;
+    background: var(--fondo-body);
+    min-height: 100vh;
+    color: var(--texto-principal);
+    transition: background 0.25s ease, color 0.2s ease;
+}
 
-                <div class="login-form-box">
-                    <div class="login-header">
-                        <h2>Iniciar Sesión</h2>
-                        <p class="subtitulo">Ingresá con tu nombre y correo institucional</p>
-                    </div>
-                    
-                    <form id="formLogin" class="login-form" novalidate>
-                        <div class="input-group">
-                            <label for="nombreUsuario">Nombre y Apellido</label>
-                            <div class="input-icon-wrapper">
-                                <i data-lucide="user"></i>
-                                <input type="text" id="nombreUsuario" placeholder="Ej: Juan Pérez">
-                            </div>
-                            <span id="error-nombreUsuario" class="mensaje-campo-error"></span>
-                        </div>
+h1, h2, h3, h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    color: var(--texto-titulo);
+    letter-spacing: -0.02em;
+}
 
-                        <div class="input-group">
-                            <label for="correo">Correo Institucional</label>
-                            <div class="input-icon-wrapper">
-                                <i data-lucide="mail"></i>
-                                <input type="email" id="correo" placeholder="usuario@escuelasproa.edu.ar">
-                            </div>
-                            <span id="error-correo" class="mensaje-campo-error"></span>
-                        </div>
-                        
-                        <button type="submit" id="btnLogin" class="btn-primary btn-login">
-                            <span>Ingresar al Campus</span>
-                            <i data-lucide="arrow-right"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
+.container {
+    width: 100%;
+    min-height: 100vh;
+}
 
-        <!-- ==================== APP SHELL FULL-SCREEN DASHBOARD ==================== -->
-        <div id="pantallaAgenda" class="app-shell" style="display:none;">
-            
-            <!-- SIDEBAR LATERAL FIJA -->
-            <aside class="app-sidebar">
-                <div class="sidebar-brand">
-                    <div class="logo-wrapper-header">
-                        <svg class="logo-cuaderno-mini"><use href="#logo-eduagenda"></use></svg>
-                    </div>
-                    <div class="sidebar-brand-text">
-                        <h1>Edu<span class="brand-accent">Agenda</span></h1>
-                        <span class="sidebar-tag">Campus ProA · 6.°</span>
-                    </div>
-                </div>
+.brand-accent {
+    color: var(--color-marca);
+}
 
-                <div class="sidebar-section-label">MENÚ PRINCIPAL</div>
-                <nav class="main-navbar" aria-label="Navegación principal">
-                    <button type="button" class="nav-tab active" data-tab="inicio">
-                        <i data-lucide="layout-dashboard"></i>
-                        <span>Inicio</span>
-                    </button>
-                    <button type="button" class="nav-tab" data-tab="nueva">
-                        <i data-lucide="plus-circle"></i>
-                        <span>Cargar Evaluación</span>
-                    </button>
-                    <button type="button" class="nav-tab" data-tab="evaluaciones">
-                        <i data-lucide="list-checks"></i>
-                        <span>Mis Evaluaciones</span>
-                    </button>
-                    <button type="button" class="nav-tab" data-tab="horario">
-                        <i data-lucide="clock"></i>
-                        <span>Mi Horario</span>
-                    </button>
-                    <button type="button" class="nav-tab" data-tab="metricas">
-                        <i data-lucide="bar-chart-3"></i>
-                        <span>Métricas y Reportes</span>
-                    </button>
-                </nav>
+/* ==================== LOGIN SPLIT-SCREEN ==================== */
+.login-split-shell {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    height: 100vh;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
 
-                <div class="sidebar-footer">
-                    <div class="sidebar-user-card">
-                        <div class="sidebar-user-avatar">
-                            <i data-lucide="graduation-cap"></i>
-                        </div>
-                        <div class="sidebar-user-info">
-                            <p id="usuario" class="sidebar-user-name"></p>
-                        </div>
-                    </div>
+.login-brand-panel {
+    background: radial-gradient(circle at 15% 20%, rgba(139, 92, 246, 0.34), transparent 55%),
+                radial-gradient(circle at 85% 80%, rgba(88, 28, 135, 0.36), transparent 60%),
+                #0e0b22;
+    color: #f8fafc;
+    padding: 32px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid rgba(167, 139, 250, 0.18);
+    overflow-y: auto;
+}
 
-                    <div class="sidebar-footer-actions">
-                        <button type="button" id="btnLogout" class="btn-secundario">
-                            <i data-lucide="log-out"></i>
-                            <span>Cerrar sesión</span>
-                        </button>
-                        <button type="button" id="btnBorrarDatos" class="btn-danger-ghost" title="Eliminar todas las evaluaciones">
-                            <i data-lucide="trash-2"></i>
-                            <span>Resetear</span>
-                        </button>
-                    </div>
-                </div>
-            </aside>
+.brand-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(139, 92, 246, 0.18);
+    border: 1px solid rgba(167, 139, 250, 0.35);
+    color: #ddd6fe;
+    font-size: 12px;
+    font-weight: 600;
+}
 
-            <!-- ÁREA DE CONTENIDO PRINCIPAL -->
-            <div class="app-workspace">
-                <header class="workspace-topbar">
-                    <div class="topbar-context">
-                        <span class="topbar-badge">Ciclo Lectivo</span>
-                        <h2 id="topbarTituloVista" class="topbar-title">Panel General</h2>
-                    </div>
+.brand-pill i, .brand-pill svg {
+    width: 15px;
+    height: 15px;
+    color: #c084fc;
+}
 
-                    <div class="topbar-actions">
-                        <button type="button" id="btnAccesoRapidoNueva" class="btn-primary btn-topbar-cta">
-                            <i data-lucide="plus"></i>
-                            <span>Nueva Evaluación</span>
-                        </button>
-                        <button type="button" id="btnTemaDashboard" class="btn-tema" title="Cambiar entre modo oscuro y claro">
-                            <i data-lucide="sun"></i>
-                            <span>Modo Claro</span>
-                        </button>
-                    </div>
-                </header>
+.login-brand-hero {
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
 
-                <main class="workspace-main">
+.logo-wrapper-login {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(168, 85, 247, 0.15));
+    border: 1px solid rgba(168, 85, 247, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 28px rgba(109, 40, 217, 0.32);
+}
 
-                    <!-- SECCIÓN 1: INICIO -->
-                    <div id="tab-inicio" class="tab-content active">
-                        <div class="inicio-grid">
-                            <div class="inicio-columna-principal">
-                                <section id="panelBienvenida" class="panel-bienvenida"></section>
-                                <section id="cursadaHoy" class="panel-bienvenida"></section>
-                                <div id="hoyManana" class="hoy-manana-container"></div>
-                            </div>
+.logo-cuaderno {
+    width: 48px;
+    height: 48px;
+    display: block;
+}
 
-                            <div class="inicio-columna-calendario">
-                                <section class="calendario-inicio-card">
-                                    <div class="calendario-card-titulo">
-                                        <i data-lucide="calendar"></i>
-                                        <h4>Calendario Académico</h4>
-                                    </div>
-                                    <div class="calendario-header">
-                                        <button type="button" id="btnMesInicioPrev">&lsaquo;</button>
-                                        <span id="mesAnioInicio"></span>
-                                        <button type="button" id="btnMesInicioNext">&rsaquo;</button>
-                                    </div>
-                                    <div class="dias-semana">
-                                        <span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span>
-                                    </div>
-                                    <div id="diasCalendarioInicio" class="dias-calendario"></div>
-                                    <div class="calendario-leyenda">
-                                        <span><i class="punto tarea"></i> Tarea / Examen</span>
-                                        <span><i class="punto recuperatorio"></i> Recuperatorio</span>
-                                    </div>
-                                    <div id="detalleDiaCalendario" class="detalle-dia-calendario">
-                                        <p class="detalle-vacio">Hacé clic en un día del calendario para ver sus evaluaciones.</p>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                    </div>
+.login-brand-hero h1 {
+    font-size: 34px;
+    line-height: 1.12;
+    color: #ffffff;
+}
 
-                    <!-- SECCIÓN 2: CARGAR NUEVA EVALUACIÓN -->
-                    <div id="tab-nueva" class="tab-content">
-                        <section class="form-container form-container-centrado">
-                            <div class="form-title">
-                                <div class="section-icon-box">
-                                    <i data-lucide="plus-circle" id="formTitleIcon"></i>
-                                </div>
-                                <div>
-                                    <h3 id="formTitleText">Cargar Nueva Evaluación</h3>
-                                    <p class="subtitulo">Registrá tareas, exámenes parciales o instancias de recuperatorio.</p>
-                                </div>
-                            </div>
+.login-brand-hero > p {
+    font-size: 14.5px;
+    color: #cbd5e1;
+    line-height: 1.5;
+}
 
-                            <div class="form-grid">
-                                <div class="input-group">
-                                    <label for="materia">Materia</label>
-                                    <select id="materia">
-                                        <option value="">-- Seleccionar Materia --</option>
-                                    </select>
-                                    <span id="error-materia" class="mensaje-campo-error"></span>
-                                </div>
+.login-feature-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+}
 
-                                <div class="input-group">
-                                    <label for="tipo">Tipo de Evaluación</label>
-                                    <select id="tipo">
-                                        <option value="">-- Seleccionar Tipo --</option>
-                                        <option value="Tarea">Tarea</option>
-                                        <option value="Examen">Examen</option>
-                                        <option value="Recuperatorio">Recuperatorio</option>
-                                    </select>
-                                    <span id="error-tipo" class="mensaje-campo-error"></span>
-                                </div>
+.login-feature-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 13px;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(167, 139, 250, 0.18);
+}
 
-                                <div class="input-group full-width">
-                                    <label for="tarea">Nombre de la evaluación</label>
-                                    <input type="text" id="tarea" placeholder="Ej: TP N° 2, Parcial Integrador...">
-                                    <span id="error-tarea" class="mensaje-campo-error"></span>
-                                </div>
+.login-feature-card i, .login-feature-card svg {
+    width: 19px;
+    height: 19px;
+    color: #c084fc;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
 
-                                <div class="input-group full-width">
-                                    <label for="detalles">Temario o Detalles (opcional)</label>
-                                    <textarea id="detalles" rows="3" placeholder="Ej: Unidad 2: funciones y gráficos. Traer hoja cuadriculada y calculadora..."></textarea>
-                                </div>
+.login-feature-card strong {
+    display: block;
+    font-size: 13.5px;
+    color: #ffffff;
+    margin-bottom: 1px;
+}
 
-                                <div class="input-group full-width input-fecha-wrapper">
-                                    <label for="fecha">Fecha de Entrega / Examen</label>
-                                    <div class="fecha-box">
-                                        <input type="date" id="fecha">
-                                        <button type="button" id="btnToggleCalendario" class="btn-calendario" title="Ver calendario">
-                                            <i data-lucide="calendar"></i>
-                                        </button>
-                                    </div>
-                                    <span id="error-fecha" class="mensaje-campo-error"></span>
-                                </div>
-                            </div>
+.login-feature-card span {
+    font-size: 12.5px;
+    color: #94a3b8;
+}
 
-                            <!-- CALENDARIO INTERACTIVO DEL FORMULARIO -->
-                            <div id="calendarioGrande" class="calendario-grande" style="display:none;">
-                                <div class="calendario-header">
-                                    <button type="button" id="btnMesFormPrev">&lsaquo;</button>
-                                    <span id="mesAnioLabel"></span>
-                                    <button type="button" id="btnMesFormNext">&rsaquo;</button>
-                                </div>
-                                <div class="dias-semana">
-                                    <span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span>
-                                </div>
-                                <div id="diasCalendario" class="dias-calendario"></div>
-                                <div class="calendario-leyenda">
-                                    <span><i class="punto tarea"></i> Tarea / Examen</span>
-                                    <span><i class="punto recuperatorio"></i> Recuperatorio</span>
-                                </div>
-                            </div>
+.login-brand-footer {
+    font-size: 12px;
+    color: #64748b;
+}
 
-                            <div class="form-actions">
-                                <button type="button" id="botonAgregar" class="btn-primary">
-                                    <i data-lucide="plus"></i>
-                                    <span>Agregar Evaluación</span>
-                                </button>
-                                <button type="button" id="botonCancelarEdicion" class="btn-secundario" style="display:none;">
-                                    <i data-lucide="x"></i>
-                                    <span>Cancelar edición</span>
-                                </button>
-                            </div>
-                        </section>
-                    </div>
+.login-form-panel {
+    background: var(--fondo-body);
+    padding: 28px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 100vh;
+}
 
-                    <!-- SECCIÓN 3: LISTADO Y FILTROS -->
-                    <div id="tab-evaluaciones" class="tab-content">
-                        <section class="listado-container">
-                            <div class="listado-header-bar">
-                                <div class="section-title">
-                                    <div class="section-icon-box">
-                                        <i data-lucide="list-checks"></i>
-                                    </div>
-                                    <div>
-                                        <h3>Mis Evaluaciones</h3>
-                                        <p class="subtitulo">Filtrá por estado, materia o palabra clave.</p>
-                                    </div>
-                                </div>
+.login-topbar {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+}
 
-                                <!-- Píldoras interactivas para filtrar por estado -->
-                                <div id="resumenStats" class="resumen-stats"></div>
-                            </div>
+.login-form-box {
+    width: 100%;
+    max-width: 410px;
+    background: var(--fondo-tarjeta);
+    border: 1px solid var(--borde-suave);
+    border-radius: 20px;
+    padding: 34px 32px;
+    box-shadow: var(--sombra-card);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
-                            <div class="controles-listado">
-                                <div class="filtro-container">
-                                    <label for="filtroMateria"><i data-lucide="filter"></i> Materia</label>
-                                    <select id="filtroMateria">
-                                        <option value="">Todas las materias</option>
-                                    </select>
-                                </div>
+.login-header h2 {
+    font-size: 26px;
+    margin-bottom: 4px;
+}
 
-                                <div class="filtro-container">
-                                    <label for="buscarTexto"><i data-lucide="search"></i> Buscar por nombre o temario</label>
-                                    <input type="text" id="buscarTexto" placeholder="Ej: parcial, unidad 2, trabajo práctico...">
-                                </div>
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
 
-                                <div class="filtro-container filtro-boton-box">
-                                    <button type="button" id="btnLimpiarFiltros" class="btn-secundario" title="Mostrar todas las evaluaciones">
-                                        <i data-lucide="rotate-ccw"></i>
-                                        <span>Limpiar filtros</span>
-                                    </button>
-                                </div>
-                            </div>
+.login-form input {
+    height: 46px;
+    font-size: 14.5px;
+}
 
-                            <div class="evaluaciones-tablero">
-                                <div class="seccion-tareas">
-                                    <h4><i data-lucide="book-open"></i> Tareas</h4>
-                                    <ul id="listaTareas"></ul>
-                                </div>
+.btn-login {
+    height: 48px;
+    font-size: 15px;
+    margin-top: 6px;
+}
 
-                                <div class="seccion-examenes">
-                                    <h4><i data-lucide="file-text"></i> Exámenes</h4>
-                                    <ul id="listaExamenes"></ul>
-                                </div>
+/* ==================== BOTÓN TEMA Y UTILIDADES ==================== */
+.btn-tema {
+    width: auto;
+    min-height: 38px;
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    background: var(--fondo-btn-secundario);
+    color: var(--texto-principal);
+    border: 1px solid var(--borde-suave);
+}
 
-                                <div class="seccion-recuperatorios">
-                                    <h4><i data-lucide="bookmark-check"></i> Recuperatorios</h4>
-                                    <ul id="listaRecuperatorios"></ul>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
+.btn-tema:hover:not(:disabled) {
+    background: var(--color-primario);
+    color: #ffffff;
+    border-color: var(--color-primario);
+}
 
-                    <!-- SECCIÓN 4: HORARIO SEMANAL DE CURSADA -->
-                    <div id="tab-horario" class="tab-content">
-                        <section class="form-container">
-                            <div class="form-title">
-                                <div class="section-icon-box">
-                                    <i data-lucide="clock"></i>
-                                </div>
-                                <div>
-                                    <h3>Mi Horario Semanal de Cursada</h3>
-                                    <p class="subtitulo">Organizá tus materias de lunes a viernes para ver en Inicio qué cursás hoy y sus alertas pendientes.</p>
-                                </div>
-                            </div>
+.subtitulo {
+    color: var(--texto-secundario);
+    font-size: 13.5px;
+}
 
-                            <div class="horario-form-grid">
-                                <div class="input-group">
-                                    <label for="horarioDia">Día</label>
-                                    <select id="horarioDia">
-                                        <option value="Lunes">Lunes</option>
-                                        <option value="Martes">Martes</option>
-                                        <option value="Miércoles">Miércoles</option>
-                                        <option value="Jueves">Jueves</option>
-                                        <option value="Viernes">Viernes</option>
-                                    </select>
-                                </div>
+.texto-tenue-inline {
+    color: var(--texto-tenue);
+}
 
-                                <div class="input-group">
-                                    <label for="horarioMateria">Materia</label>
-                                    <select id="horarioMateria">
-                                        <option value="">-- Seleccionar Materia --</option>
-                                    </select>
-                                    <span id="error-horarioMateria" class="mensaje-campo-error"></span>
-                                </div>
+.texto-secundario-inline {
+    color: var(--texto-secundario);
+}
 
-                                <div class="input-group">
-                                    <label for="horarioHora">Hora / Bloque (opcional)</label>
-                                    <input type="text" id="horarioHora" placeholder="Ej: 08:00 - 09:20">
-                                </div>
+/* INPUTS Y FORMULARIOS BASE */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
 
-                                <div class="input-group" style="justify-content: flex-end;">
-                                    <button type="button" id="btnAgregarHorario" class="btn-primary">
-                                        <i data-lucide="plus"></i>
-                                        <span>Agregar al Horario</span>
-                                    </button>
-                                </div>
-                            </div>
+.input-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--texto-label);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
 
-                            <div id="gridHorarioSemanal" class="horario-semanal-grid"></div>
-                        </section>
-                    </div>
+.input-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
 
-                    <!-- SECCIÓN 5: MÉTRICAS, SIMULADOR Y PROMEDIO -->
-                    <div id="tab-metricas" class="tab-content">
-                        <div class="metricas-grid">
-                            <div class="sidebar-widget">
-                                <div id="progresoMaterias" class="progreso-materias"></div>
-                            </div>
+.input-icon-wrapper i,
+.input-icon-wrapper svg {
+    position: absolute;
+    left: 14px;
+    color: var(--texto-tenue);
+    width: 18px;
+    height: 18px;
+}
 
-                            <div class="sidebar-widget promedio-box">
-                                <h4><i data-lucide="calculator"></i> Rendimiento Académico</h4>
-                                <button type="button" id="btnCalcularPromedio" class="btn-primary">
-                                    <i data-lucide="calculator"></i>
-                                    <span>Calcular Promedio General</span>
-                                </button>
-                                <p id="promedio"></p>
-                                <div id="promediosPorMateria" class="promedios-materia-lista"></div>
-                                <button type="button" id="btnExportarCSV" class="btn-excel">
-                                    <i data-lucide="file-spreadsheet"></i>
-                                    <span>Exportar Archivo Excel (CSV)</span>
-                                </button>
-                            </div>
+.input-icon-wrapper input {
+    padding-left: 42px;
+}
 
-                            <div class="sidebar-widget simulador-box">
-                                <h4><i data-lucide="target"></i> Simulador de Promedio</h4>
-                                <p class="subtitulo">Calculá qué nota mínima necesitás en tu próxima evaluación.</p>
+input, select, textarea {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    border-radius: 10px;
+    border: 1px solid var(--borde-input);
+    background-color: var(--fondo-input);
+    color: var(--texto-principal);
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
 
-                                <div class="input-group">
-                                    <label for="simuladorMateria">Materia</label>
-                                    <select id="simuladorMateria">
-                                        <option value="TODAS">Promedio General (Todas)</option>
-                                    </select>
-                                </div>
+textarea {
+    resize: vertical;
+}
 
-                                <div class="input-group">
-                                    <label for="simuladorObjetivo">Promedio objetivo</label>
-                                    <select id="simuladorObjetivo">
-                                        <option value="6">6.00 (Aprobar)</option>
-                                        <option value="7">7.00 (Promocionar)</option>
-                                        <option value="8">8.00 (Destacado)</option>
-                                        <option value="9">9.00 (Excelente)</option>
-                                    </select>
-                                </div>
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--color-primario);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18);
+}
 
-                                <div id="resultadoSimulador" class="resultado-simulador"></div>
-                            </div>
-                        </div>
-                    </div>
+select option {
+    background-color: var(--fondo-opcion);
+    color: var(--texto-principal);
+}
 
-                </main>
-            </div>
+/* BOTONES GENERALES */
+button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
 
-        </div>
+button i, button svg {
+    width: 16px;
+    height: 16px;
+}
 
-    </div>
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
 
-    <!-- MODAL PARA CALIFICAR / RECUPERAR -->
-    <div id="modalCalificar" class="modal-overlay" style="display:none;">
-        <div class="modal-card">
-            <h4 id="modalCalificarTitulo">Calificar Evaluación</h4>
-            <p id="modalCalificarSubtitulo" class="subtitulo">Ingresá la calificación obtenida (1 a 10):</p>
-            <input type="number" id="modalCalificarInput" min="1" max="10" step="0.5" placeholder="Ej: 8">
-            <span id="error-modalCalificarInput" class="mensaje-campo-error"></span>
-            <div class="modal-actions">
-                <button type="button" id="btnCancelarCalificar" class="btn-secundario">Cancelar</button>
-                <button type="button" id="btnConfirmarCalificar" class="btn-primary">Guardar Nota</button>
-            </div>
-        </div>
-    </div>
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-primario), var(--color-primario-hover));
+    color: white;
+    box-shadow: 0 4px 14px rgba(124, 58, 237, 0.28);
+}
+.btn-primary:hover:not(:disabled) {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+}
 
-    <!-- MODAL PERSONALIZADO DE ERRORES Y CONFIRMACIONES -->
-    <div id="modalAlerta" class="modal-overlay" style="display:none;">
-        <div class="modal-card modal-alerta-card" id="modalAlertaCard">
-            <div class="modal-alerta-header">
-                <div id="modalAlertaIconoBox" class="modal-alerta-icono error">
-                    <i data-lucide="alert-circle"></i>
-                </div>
-                <h4 id="modalAlertaTitulo">Aviso de EduAgenda</h4>
-            </div>
-            <p id="modalAlertaMensaje" class="modal-alerta-texto"></p>
-            <div class="modal-actions">
-                <button type="button" id="modalAlertaBtnCancelar" class="btn-secundario" style="display:none;">Cancelar</button>
-                <button type="button" id="modalAlertaBtnConfirmar" class="btn-primary">Entendido</button>
-            </div>
-        </div>
-    </div>
+.btn-secundario {
+    background: var(--fondo-btn-secundario);
+    color: var(--texto-principal);
+    border: 1px solid var(--borde-suave);
+}
+.btn-secundario:hover:not(:disabled) {
+    background: var(--fondo-btn-secundario-hover);
+}
 
-    <!-- CONTENEDOR DE NOTIFICACIONES FLOTANTES PERSONALIZADAS -->
-    <div id="toastContainer" class="toast-container"></div>
+.btn-danger {
+    background: var(--color-peligro);
+    color: white;
+}
+.btn-danger:hover:not(:disabled) {
+    background: var(--color-peligro-hover);
+}
 
-    <!-- PUNTO DE ENTRADA MODULAR ES6 -->
-    <script type="module" src="js/auth-navegacion.js"></script>
-</body>
-</html>
+.btn-danger-ghost {
+    background: rgba(239, 68, 68, 0.12);
+    color: var(--color-desaprobado);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+}
+.btn-danger-ghost:hover:not(:disabled) {
+    background: var(--color-peligro);
+    color: #ffffff;
+}
+
+.btn-excel {
+    background: var(--color-exito);
+    color: white;
+}
+.btn-excel:hover:not(:disabled) {
+    background: var(--color-exito-hover);
+}
+
+@media (max-width: 920px) {
+    .login-split-shell {
+        grid-template-columns: 1fr;
+        height: auto;
+        overflow: visible;
+    }
+    .login-form-panel {
+        height: auto;
+        min-height: 100vh;
+    }
+    .login-brand-panel {
+        display: none;
+    }
+    .login-form-panel {
+        padding: 24px 16px;
+    }
+    .login-topbar {
+        position: static;
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 16px;
+    }
+}
