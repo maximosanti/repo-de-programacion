@@ -1,0 +1,182 @@
+/* ESTADOS DE ERROR INLINE EN CAMPOS */
+.campo-invalido {
+    border-color: var(--color-peligro) !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25) !important;
+    animation: sacudirCampo 0.35s ease;
+}
+
+.mensaje-campo-error {
+    color: var(--color-error-texto);
+    font-size: 12px;
+    font-weight: 500;
+    min-height: 0;
+    display: none;
+}
+
+.mensaje-campo-error.visible {
+    display: block;
+}
+
+@keyframes sacudirCampo {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* MODALES PERSONALIZADOS */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 10, 30, 0.68);
+    backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 16px;
+}
+
+.modal-card {
+    background: var(--fondo-modal);
+    color: var(--texto-principal);
+    border: 1px solid var(--borde-suave);
+    border-radius: 16px;
+    padding: 24px;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+    animation: aparecerModal 0.2s ease-out;
+}
+
+@keyframes aparecerModal {
+    from { opacity: 0; transform: scale(0.94); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-alerta-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.modal-alerta-icono {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.modal-alerta-icono.error {
+    background: rgba(239, 68, 68, 0.18);
+    color: var(--color-desaprobado);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.modal-alerta-icono.warning {
+    background: rgba(245, 158, 11, 0.18);
+    color: var(--color-alerta);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.modal-alerta-icono.info {
+    background: rgba(139, 92, 246, 0.18);
+    color: var(--color-primario);
+    border: 1px solid rgba(139, 92, 246, 0.4);
+}
+
+.modal-alerta-texto {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--texto-secundario);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+/* NOTIFICACIONES FLOTANTES (TOASTS) */
+.toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 2500;
+    max-width: 360px;
+    width: calc(100% - 48px);
+}
+
+.toast-item {
+    background: var(--fondo-toast);
+    backdrop-filter: blur(10px);
+    color: var(--texto-principal);
+    padding: 13px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--borde-suave);
+    border-left: 4px solid var(--color-primario);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    animation: entrarToast 0.25s ease forwards;
+}
+
+.toast-item.toast-error { border-left-color: var(--color-peligro); }
+.toast-item.toast-warning { border-left-color: var(--color-alerta); }
+.toast-item.toast-success { border-left-color: var(--color-primario); }
+.toast-item.toast-info { border-left-color: var(--color-acento); }
+
+.toast-icon {
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.toast-error .toast-icon { color: var(--color-desaprobado); }
+.toast-warning .toast-icon { color: var(--color-alerta); }
+.toast-success .toast-icon { color: var(--color-primario); }
+.toast-info .toast-icon { color: var(--color-acento); }
+
+.toast-body {
+    flex: 1;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.toast-titulo {
+    display: block;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 2px;
+    color: var(--texto-titulo);
+}
+
+.toast-cerrar {
+    background: transparent;
+    color: var(--texto-tenue);
+    width: auto;
+    min-height: auto;
+    padding: 2px;
+    font-size: 14px;
+}
+
+.toast-cerrar:hover {
+    color: var(--texto-titulo);
+}
+
+@keyframes entrarToast {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@media (max-width: 600px) {
+    .toast-container { right: 16px; bottom: 16px; width: calc(100% - 32px); }
+}
