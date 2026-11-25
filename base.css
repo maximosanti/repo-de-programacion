@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="oscuro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduAgenda · Campus Estudiantil</title>
+
+    <script>
+        (function() {
+            var t = localStorage.getItem("temaEduAgenda");
+            if (t === "claro" || t === "oscuro") {
+                document.documentElement.setAttribute("data-tema", t);
+            }
+        })();
+    </script>
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Estilos separados por módulo -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/evaluaciones.css">
+    <link rel="stylesheet" href="css/modales-alertas.css">
+</head>
+<body>
+
+    <!-- SÍMBOLO SVG REUTILIZABLE DEL LOGOTIPO -->
+    <svg width="0" height="0" style="position:absolute; width:0; height:0; overflow:hidden;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <symbol id="logo-eduagenda" viewBox="0 0 110 110">
+            <defs>
+                <linearGradient id="coverGradLogo" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#8b5cf6"/>
+                    <stop offset="100%" stop-color="#5b21b6"/>
+                </linearGradient>
+                <linearGradient id="badgeGradLogo" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#a855f7"/>
+                    <stop offset="100%" stop-color="#7c3aed"/>
+                </linearGradient>
+            </defs>
+            <g transform="rotate(-7 52 52)">
+                <rect x="22" y="14" width="16" height="74" rx="6" fill="#3b0764"/>
+                <rect x="30" y="14" width="52" height="74" rx="10" fill="url(#coverGradLogo)"/>
+                <path d="M30 78 H80 V84 C80 86.5 78 88 75 88 H32 C29 88 27 86 27 83 C27 80 28.5 78 30 78 Z" fill="#f8fafc"/>
+                <path d="M38 82 H48 V98 L43 93 L38 98 Z" fill="#a855f7"/>
+                <rect x="14" y="25" width="16" height="7" rx="3.5" fill="#2e1065"/>
+                <rect x="14" y="46" width="16" height="7" rx="3.5" fill="#2e1065"/>
+                <rect x="14" y="67" width="16" height="7" rx="3.5" fill="#2e1065"/>
+                <rect x="42" y="29" width="27" height="5" rx="2.5" fill="#f3e8ff"/>
+                <rect x="42" y="40" width="19" height="5" rx="2.5" fill="#e9d5ff"/>
+                <rect x="42" y="51" width="24" height="5" rx="2.5" fill="#e9d5ff"/>
+            </g>
+            <circle cx="80" cy="76" r="20" fill="url(#badgeGradLogo)" stroke="#ffffff" stroke-width="3.5"/>
+            <path d="M72 76.5 L77.5 82 L89 70.5" fill="none" stroke="#ffffff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+    </svg>
+
+    <div class="container">
+
+        <!-- ==================== PANTALLA LOGIN SPLIT-SCREEN ==================== -->
+        <div id="pantallaLogin" class="login-split-shell">
+            <div class="login-brand-panel">
+                <div class="login-brand-top">
+                    <div class="brand-pill">
+                        <i data-lucide="sparkles"></i>
+                        <span>Escuelas ProA · Plataforma Estudiantil</span>
+                    </div>
+                </div>
+
+                <div class="login-brand-hero">
+                    <div class="logo-wrapper-login">
+                        <svg class="logo-cuaderno"><use href="#logo-eduagenda"></use></svg>
+                    </div>
+                    <h1>Organizá tu cursada con <span class="brand-accent">EduAgenda</span></h1>
+                    <p>Controlá tus exámenes, trabajos prácticos, recuperatorios, promedios por materia y horario semanal desde un mismo lugar.</p>
+
+                    <div class="login-feature-grid">
+                        <div class="login-feature-card">
+                            <i data-lucide="calendar-check-2"></i>
+                            <div>
+                                <strong>Calendario Inteligente</strong>
+                                <span>Alertas visuales para entregas de hoy y mañana.</span>
+                            </div>
+                        </div>
+                        <div class="login-feature-card">
+                            <i data-lucide="calculator"></i>
+                            <div>
+                                <strong>Simulador de Notas</strong>
+                                <span>Calculá qué nota necesitás para aprobar o promocionar.</span>
+                            </div>
+                        </div>
+                        <div class="login-feature-card">
+                            <i data-lucide="clock"></i>
+                            <div>
+                                <strong>Horario Semanal</strong>
+                                <span>Sincronizado con tus evaluaciones pendientes del día.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="login-brand-footer">
+                    <span>Proyecto de 6.° Año · Desarrollo de Aplicaciones</span>
+                </div>
+            </div>
+
+            <div class="login-form-panel">
+                <div class="login-topbar">
+                    <button type="button" id="btnTemaLogin" class="btn-tema" title="Cambiar entre modo oscuro y claro">
+                        <i data-lucide="sun"></i>
+                        <span>Modo Claro</span>
+                    </button>
+                </div>
+
+                <div class="login-form-box">
+                    <div class="login-header">
+                        <h2>Iniciar Sesión</h2>
+                        <p class="subtitulo">Ingresá con tu nombre y correo institucional</p>
+                    </div>
+                    
+                    <form id="formLogin" class="login-form" novalidate>
+                        <div class="input-group">
+                            <label for="nombreUsuario">Nombre y Apellido</label>
+                            <div class="input-icon-wrapper">
+                                <i data-lucide="user"></i>
+                                <input type="text" id="nombreUsuario" placeholder="Ej: Juan Pérez">
+                            </div>
+                            <span id="error-nombreUsuario" class="mensaje-campo-error"></span>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="correo">Correo Institucional</label>
+                            <div class="input-icon-wrapper">
+                                <i data-lucide="mail"></i>
+                                <input type="email" id="correo" placeholder="usuario@escuelasproa.edu.ar">
+                            </div>
+                            <span id="error-correo" class="mensaje-campo-error"></span>
+                        </div>
+                        
+                        <button type="submit" id="btnLogin" class="btn-primary btn-login">
+                            <span>Ingresar al Campus</span>
+                            <i data-lucide="arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== APP SHELL FULL-SCREEN DASHBOARD ==================== -->
+        <div id="pantallaAgenda" class="app-shell" style="display:none;">
+            
+            <!-- SIDEBAR LATERAL FIJA -->
+            <aside class="app-sidebar">
+                <div class="sidebar-brand">
+                    <div class="logo-wrapper-header">
+                        <svg class="logo-cuaderno-mini"><use href="#logo-eduagenda"></use></svg>
+                    </div>
+                    <div class="sidebar-brand-text">
+                        <h1>Edu<span class="brand-accent">Agenda</span></h1>
+                        <span class="sidebar-tag">Campus ProA · 6.°</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-section-label">MENÚ PRINCIPAL</div>
+                <nav class="main-navbar" aria-label="Navegación principal">
+                    <button type="button" class="nav-tab active" data-tab="inicio">
+                        <i data-lucide="layout-dashboard"></i>
+                        <span>Inicio</span>
+                    </button>
+                    <button type="button" class="nav-tab" data-tab="nueva">
+                        <i data-lucide="plus-circle"></i>
+                        <span>Cargar Evaluación</span>
+                    </button>
+                    <button type="button" class="nav-tab" data-tab="evaluaciones">
+                        <i data-lucide="list-checks"></i>
+                        <span>Mis Evaluaciones</span>
+                    </button>
+                    <button type="button" class="nav-tab" data-tab="horario">
+                        <i data-lucide="clock"></i>
+                        <span>Mi Horario</span>
+                    </button>
+                    <button type="button" class="nav-tab" data-tab="metricas">
+                        <i data-lucide="bar-chart-3"></i>
+                        <span>Métricas y Reportes</span>
+                    </button>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <div class="sidebar-user-card">
+                        <div class="sidebar-user-avatar">
+                            <i data-lucide="graduation-cap"></i>
+                        </div>
+                        <div class="sidebar-user-info">
+                            <p id="usuario" class="sidebar-user-name"></p>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-footer-actions">
+                        <button type="button" id="btnLogout" class="btn-secundario">
+                            <i data-lucide="log-out"></i>
+                            <span>Cerrar sesión</span>
+                        </button>
+                        <button type="button" id="btnBorrarDatos" class="btn-danger-ghost" title="Eliminar todas las evaluaciones">
+                            <i data-lucide="trash-2"></i>
+                            <span>Resetear</span>
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- ÁREA DE CONTENIDO PRINCIPAL -->
+            <div class="app-workspace">
+                <header class="workspace-topbar">
+                    <div class="topbar-context">
+                        <span class="topbar-badge">Ciclo Lectivo</span>
+                        <h2 id="topbarTituloVista" class="topbar-title">Panel General</h2>
+                    </div>
+
+                    <div class="topbar-actions">
+                        <button type="button" id="btnAccesoRapidoNueva" class="btn-primary btn-topbar-cta">
+                            <i data-lucide="plus"></i>
+                            <span>Nueva Evaluación</span>
+                        </button>
+                        <button type="button" id="btnTemaDashboard" class="btn-tema" title="Cambiar entre modo oscuro y claro">
+                            <i data-lucide="sun"></i>
+                            <span>Modo Claro</span>
+                        </button>
+                    </div>
+                </header>
+
+                <main class="workspace-main">
+
+                    <!-- SECCIÓN 1: INICIO -->
+                    <div id="tab-inicio" class="tab-content active">
+                        <div class="inicio-grid">
+                            <div class="inicio-columna-principal">
+                                <section id="panelBienvenida" class="panel-bienvenida"></section>
+                                <section id="cursadaHoy" class="panel-bienvenida"></section>
+                                <div id="hoyManana" class="hoy-manana-container"></div>
+                            </div>
+
+                            <div class="inicio-columna-calendario">
+                                <section class="calendario-inicio-card">
+                                    <div class="calendario-card-titulo">
+                                        <i data-lucide="calendar"></i>
+                                        <h4>Calendario Académico</h4>
+                                    </div>
+                                    <div class="calendario-header">
+                                        <button type="button" id="btnMesInicioPrev">&lsaquo;</button>
+                                        <span id="mesAnioInicio"></span>
+                                        <button type="button" id="btnMesInicioNext">&rsaquo;</button>
+                                    </div>
+                                    <div class="dias-semana">
+                                        <span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span>
+                                    </div>
+                                    <div id="diasCalendarioInicio" class="dias-calendario"></div>
+                                    <div class="calendario-leyenda">
+                                        <span><i class="punto tarea"></i> Tarea / Examen</span>
+                                        <span><i class="punto recuperatorio"></i> Recuperatorio</span>
+                                    </div>
+                                    <div id="detalleDiaCalendario" class="detalle-dia-calendario">
+                                        <p class="detalle-vacio">Hacé clic en un día del calendario para ver sus evaluaciones.</p>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN 2: CARGAR NUEVA EVALUACIÓN -->
+                    <div id="tab-nueva" class="tab-content">
+                        <section class="form-container form-container-centrado">
+                            <div class="form-title">
+                                <div class="section-icon-box">
+                                    <i data-lucide="plus-circle" id="formTitleIcon"></i>
+                                </div>
+                                <div>
+                                    <h3 id="formTitleText">Cargar Nueva Evaluación</h3>
+                                    <p class="subtitulo">Registrá tareas, exámenes parciales o instancias de recuperatorio.</p>
+                                </div>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="input-group">
+                                    <label for="materia">Materia</label>
+                                    <select id="materia">
+                                        <option value="">-- Seleccionar Materia --</option>
+                                    </select>
+                                    <span id="error-materia" class="mensaje-campo-error"></span>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="tipo">Tipo de Evaluación</label>
+                                    <select id="tipo">
+                                        <option value="">-- Seleccionar Tipo --</option>
+                                        <option value="Tarea">Tarea</option>
+                                        <option value="Examen">Examen</option>
+                                        <option value="Recuperatorio">Recuperatorio</option>
+                                    </select>
+                                    <span id="error-tipo" class="mensaje-campo-error"></span>
+                                </div>
+
+                                <div class="input-group full-width">
+                                    <label for="tarea">Nombre de la evaluación</label>
+                                    <input type="text" id="tarea" placeholder="Ej: TP N° 2, Parcial Integrador...">
+                                    <span id="error-tarea" class="mensaje-campo-error"></span>
+                                </div>
+
+                                <div class="input-group full-width">
+                                    <label for="detalles">Temario o Detalles (opcional)</label>
+                                    <textarea id="detalles" rows="3" placeholder="Ej: Unidad 2: funciones y gráficos. Traer hoja cuadriculada y calculadora..."></textarea>
+                                </div>
+
+                                <div class="input-group full-width input-fecha-wrapper">
+                                    <label for="fecha">Fecha de Entrega / Examen</label>
+                                    <div class="fecha-box">
+                                        <input type="date" id="fecha">
+                                        <button type="button" id="btnToggleCalendario" class="btn-calendario" title="Ver calendario">
+                                            <i data-lucide="calendar"></i>
+                                        </button>
+                                    </div>
+                                    <span id="error-fecha" class="mensaje-campo-error"></span>
+                                </div>
+                            </div>
+
+                            <!-- CALENDARIO INTERACTIVO DEL FORMULARIO -->
+                            <div id="calendarioGrande" class="calendario-grande" style="display:none;">
+                                <div class="calendario-header">
+                                    <button type="button" id="btnMesFormPrev">&lsaquo;</button>
+                                    <span id="mesAnioLabel"></span>
+                                    <button type="button" id="btnMesFormNext">&rsaquo;</button>
+                                </div>
+                                <div class="dias-semana">
+                                    <span>D</span><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span>
+                                </div>
+                                <div id="diasCalendario" class="dias-calendario"></div>
+                                <div class="calendario-leyenda">
+                                    <span><i class="punto tarea"></i> Tarea / Examen</span>
+                                    <span><i class="punto recuperatorio"></i> Recuperatorio</span>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" id="botonAgregar" class="btn-primary">
+                                    <i data-lucide="plus"></i>
+                                    <span>Agregar Evaluación</span>
+                                </button>
+                                <button type="button" id="botonCancelarEdicion" class="btn-secundario" style="display:none;">
+                                    <i data-lucide="x"></i>
+                                    <span>Cancelar edición</span>
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- SECCIÓN 3: LISTADO Y FILTROS -->
+                    <div id="tab-evaluaciones" class="tab-content">
+                        <section class="listado-container">
+                            <div class="listado-header-bar">
+                                <div class="section-title">
+                                    <div class="section-icon-box">
+                                        <i data-lucide="list-checks"></i>
+                                    </div>
+                                    <div>
+                                        <h3>Mis Evaluaciones</h3>
+                                        <p class="subtitulo">Filtrá por estado, materia o palabra clave.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Píldoras interactivas para filtrar por estado -->
+                                <div id="resumenStats" class="resumen-stats"></div>
+                            </div>
+
+                            <div class="controles-listado">
+                                <div class="filtro-container">
+                                    <label for="filtroMateria"><i data-lucide="filter"></i> Materia</label>
+                                    <select id="filtroMateria">
+                                        <option value="">Todas las materias</option>
+                                    </select>
+                                </div>
+
+                                <div class="filtro-container">
+                                    <label for="buscarTexto"><i data-lucide="search"></i> Buscar por nombre o temario</label>
+                                    <input type="text" id="buscarTexto" placeholder="Ej: parcial, unidad 2, trabajo práctico...">
+                                </div>
+
+                                <div class="filtro-container filtro-boton-box">
+                                    <button type="button" id="btnLimpiarFiltros" class="btn-secundario" title="Mostrar todas las evaluaciones">
+                                        <i data-lucide="rotate-ccw"></i>
+                                        <span>Limpiar filtros</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="evaluaciones-tablero">
+                                <div class="seccion-tareas">
+                                    <h4><i data-lucide="book-open"></i> Tareas</h4>
+                                    <ul id="listaTareas"></ul>
+                                </div>
+
+                                <div class="seccion-examenes">
+                                    <h4><i data-lucide="file-text"></i> Exámenes</h4>
+                                    <ul id="listaExamenes"></ul>
+                                </div>
+
+                                <div class="seccion-recuperatorios">
+                                    <h4><i data-lucide="bookmark-check"></i> Recuperatorios</h4>
+                                    <ul id="listaRecuperatorios"></ul>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- SECCIÓN 4: HORARIO SEMANAL DE CURSADA -->
+                    <div id="tab-horario" class="tab-content">
+                        <section class="form-container">
+                            <div class="form-title">
+                                <div class="section-icon-box">
+                                    <i data-lucide="clock"></i>
+                                </div>
+                                <div>
+                                    <h3>Mi Horario Semanal de Cursada</h3>
+                                    <p class="subtitulo">Organizá tus materias de lunes a viernes para ver en Inicio qué cursás hoy y sus alertas pendientes.</p>
+                                </div>
+                            </div>
+
+                            <div class="horario-form-grid">
+                                <div class="input-group">
+                                    <label for="horarioDia">Día</label>
+                                    <select id="horarioDia">
+                                        <option value="Lunes">Lunes</option>
+                                        <option value="Martes">Martes</option>
+                                        <option value="Miércoles">Miércoles</option>
+                                        <option value="Jueves">Jueves</option>
+                                        <option value="Viernes">Viernes</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="horarioMateria">Materia</label>
+                                    <select id="horarioMateria">
+                                        <option value="">-- Seleccionar Materia --</option>
+                                    </select>
+                                    <span id="error-horarioMateria" class="mensaje-campo-error"></span>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="horarioHora">Hora / Bloque (opcional)</label>
+                                    <input type="text" id="horarioHora" placeholder="Ej: 08:00 - 09:20">
+                                </div>
+
+                                <div class="input-group" style="justify-content: flex-end;">
+                                    <button type="button" id="btnAgregarHorario" class="btn-primary">
+                                        <i data-lucide="plus"></i>
+                                        <span>Agregar al Horario</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="gridHorarioSemanal" class="horario-semanal-grid"></div>
+                        </section>
+                    </div>
+
+                    <!-- SECCIÓN 5: MÉTRICAS, SIMULADOR Y PROMEDIO -->
+                    <div id="tab-metricas" class="tab-content">
+                        <div class="metricas-grid">
+                            <div class="sidebar-widget">
+                                <div id="progresoMaterias" class="progreso-materias"></div>
+                            </div>
+
+                            <div class="sidebar-widget promedio-box">
+                                <h4><i data-lucide="calculator"></i> Rendimiento Académico</h4>
+                                <button type="button" id="btnCalcularPromedio" class="btn-primary">
+                                    <i data-lucide="calculator"></i>
+                                    <span>Calcular Promedio General</span>
+                                </button>
+                                <p id="promedio"></p>
+                                <div id="promediosPorMateria" class="promedios-materia-lista"></div>
+                                <button type="button" id="btnExportarCSV" class="btn-excel">
+                                    <i data-lucide="file-spreadsheet"></i>
+                                    <span>Exportar Archivo Excel (CSV)</span>
+                                </button>
+                            </div>
+
+                            <div class="sidebar-widget simulador-box">
+                                <h4><i data-lucide="target"></i> Simulador de Promedio</h4>
+                                <p class="subtitulo">Calculá qué nota mínima necesitás en tu próxima evaluación.</p>
+
+                                <div class="input-group">
+                                    <label for="simuladorMateria">Materia</label>
+                                    <select id="simuladorMateria">
+                                        <option value="TODAS">Promedio General (Todas)</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="simuladorObjetivo">Promedio objetivo</label>
+                                    <select id="simuladorObjetivo">
+                                        <option value="6">6.00 (Aprobar)</option>
+                                        <option value="7">7.00 (Promocionar)</option>
+                                        <option value="8">8.00 (Destacado)</option>
+                                        <option value="9">9.00 (Excelente)</option>
+                                    </select>
+                                </div>
+
+                                <div id="resultadoSimulador" class="resultado-simulador"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </main>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- MODAL PARA CALIFICAR / RECUPERAR -->
+    <div id="modalCalificar" class="modal-overlay" style="display:none;">
+        <div class="modal-card">
+            <h4 id="modalCalificarTitulo">Calificar Evaluación</h4>
+            <p id="modalCalificarSubtitulo" class="subtitulo">Ingresá la calificación obtenida (1 a 10):</p>
+            <input type="number" id="modalCalificarInput" min="1" max="10" step="0.5" placeholder="Ej: 8">
+            <span id="error-modalCalificarInput" class="mensaje-campo-error"></span>
+            <div class="modal-actions">
+                <button type="button" id="btnCancelarCalificar" class="btn-secundario">Cancelar</button>
+                <button type="button" id="btnConfirmarCalificar" class="btn-primary">Guardar Nota</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PERSONALIZADO DE ERRORES Y CONFIRMACIONES -->
+    <div id="modalAlerta" class="modal-overlay" style="display:none;">
+        <div class="modal-card modal-alerta-card" id="modalAlertaCard">
+            <div class="modal-alerta-header">
+                <div id="modalAlertaIconoBox" class="modal-alerta-icono error">
+                    <i data-lucide="alert-circle"></i>
+                </div>
+                <h4 id="modalAlertaTitulo">Aviso de EduAgenda</h4>
+            </div>
+            <p id="modalAlertaMensaje" class="modal-alerta-texto"></p>
+            <div class="modal-actions">
+                <button type="button" id="modalAlertaBtnCancelar" class="btn-secundario" style="display:none;">Cancelar</button>
+                <button type="button" id="modalAlertaBtnConfirmar" class="btn-primary">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENEDOR DE NOTIFICACIONES FLOTANTES PERSONALIZADAS -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- PUNTO DE ENTRADA MODULAR ES6 -->
+    <script type="module" src="js/auth-navegacion.js"></script>
+</body>
+</html>
