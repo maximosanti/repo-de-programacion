@@ -1,0 +1,301 @@
+.form-container, .listado-container {
+    background: var(--fondo-tarjeta);
+    border: 1px solid var(--borde-suave);
+    border-radius: 16px;
+    padding: 26px;
+    box-shadow: var(--sombra-card);
+}
+
+.form-container-centrado {
+    max-width: 820px;
+    margin: 0 auto;
+}
+
+.form-title, .section-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.section-icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--fondo-chip);
+    border: 1px solid var(--borde-suave);
+    color: var(--color-primario);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.section-icon-box i, .section-icon-box svg {
+    width: 20px;
+    height: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.full-width { grid-column: 1 / -1; }
+.row { display: flex; gap: 10px; }
+
+.fecha-box {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+.btn-calendario {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--fondo-btn-secundario);
+    border: 1px solid var(--borde-suave);
+    border-radius: 10px;
+    cursor: pointer;
+    color: var(--texto-principal);
+}
+
+.btn-calendario:hover {
+    background: var(--color-primario);
+    color: #ffffff;
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+/* LISTADO Y FILTROS */
+.listado-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.listado-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.resumen-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.stat-item {
+    width: auto;
+    min-height: 32px;
+    padding: 5px 13px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 600;
+    background: var(--fondo-subtarjeta);
+    border: 1px solid var(--borde-suave);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.stat-item:hover {
+    background: var(--fondo-btn-secundario-hover);
+    transform: translateY(-1px);
+}
+
+.stat-item.active {
+    border-color: currentColor;
+    background: var(--fondo-chip);
+    box-shadow: 0 2px 10px rgba(124, 58, 237, 0.2);
+}
+
+.stat-total { color: var(--texto-titulo); }
+.stat-pendiente { color: var(--color-acento); }
+.stat-entregada { color: var(--color-entregada); }
+.stat-aprobada { color: var(--color-aprobado); }
+.stat-desaprobada { color: var(--color-desaprobado); }
+
+.controles-listado {
+    display: flex;
+    gap: 14px;
+    align-items: flex-end;
+    padding: 16px;
+    border-radius: 12px;
+    background: var(--fondo-subtarjeta);
+    border: 1px solid var(--borde-suave);
+}
+
+.filtro-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.filtro-boton-box {
+    flex: 0 0 auto;
+}
+
+.filtro-container label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--texto-secundario);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.filtro-container label i, .filtro-container label svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* TABLERO DE EVALUACIONES */
+.evaluaciones-tablero {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.seccion-tareas, .seccion-examenes, .seccion-recuperatorios {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--fondo-subtarjeta);
+    border: 1px solid var(--borde-suave);
+    border-radius: 14px;
+    padding: 18px;
+}
+
+.seccion-tareas h4 { border-bottom: 2px solid var(--color-primario); }
+.seccion-examenes h4 { border-bottom: 2px solid var(--color-acento); }
+.seccion-recuperatorios h4 { border-bottom: 2px solid var(--color-alerta); }
+
+.seccion-tareas h4, .seccion-examenes h4, .seccion-recuperatorios h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15.5px;
+    padding-bottom: 10px;
+}
+
+ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 14px;
+    margin-top: 4px;
+}
+
+li {
+    background: var(--fondo-tarjeta);
+    border: 1px solid var(--borde-suave);
+    padding: 16px;
+    border-radius: 12px;
+    border-left: 4px solid var(--color-primario);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+li:hover:not(.vacio) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+    border-color: var(--borde-fuerte);
+}
+
+.seccion-examenes li { border-left-color: var(--color-acento); }
+.seccion-recuperatorios li { border-left-color: var(--color-alerta); }
+
+li.vacio {
+    grid-column: 1 / -1;
+    border-left: 1px solid var(--borde-suave);
+    color: var(--texto-tenue);
+    align-items: center;
+    padding: 20px;
+}
+
+.tarea-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 13.5px;
+}
+
+.tarea-detalles {
+    margin-top: 4px;
+    padding: 8px 10px;
+    background: var(--fondo-subtarjeta);
+    border: 1px solid var(--borde-suave);
+    border-radius: 8px;
+    color: var(--texto-secundario);
+    font-size: 12.5px;
+    line-height: 1.4;
+}
+
+.dot-materia {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.estado { font-weight: 700; font-size: 12.5px; }
+.estado-aprobado { color: var(--color-aprobado); }
+.estado-desaprobado { color: var(--color-desaprobado); }
+.estado-pendiente { color: var(--color-acento); }
+.estado-entregada { color: var(--color-entregada); }
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    border-top: 1px solid var(--borde-suave);
+    padding-top: 10px;
+}
+.acciones button { width: auto; min-height: 32px; padding: 5px 11px; font-size: 12px; color: white; border-radius: 8px; }
+.btn-editar { background: #475569; }
+.btn-entregar { background: var(--color-primario); }
+.btn-deshacer-entrega { background: #64748b; }
+.btn-calificar { background: #6366f1; }
+.btn-recuperar { background: var(--color-alerta); }
+.btn-gcal { background: #7c3aed; }
+.btn-eliminar { background: var(--color-peligro); }
+
+.badge-vencida {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(239, 68, 68, 0.16);
+    color: var(--color-desaprobado);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    vertical-align: middle;
+}
+
+li.item-vencido {
+    border-left-color: var(--color-peligro) !important;
+}
+
+@media (max-width: 700px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .controles-listado { flex-direction: column; align-items: stretch; }
+}
